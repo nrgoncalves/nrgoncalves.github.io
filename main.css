@@ -1,0 +1,277 @@
+@import url(http://fonts.googleapis.com/css?family=Ubuntu:400,500);
+
+*{
+	padding:0;
+	margin:0;
+}
+
+body{
+	font-family: "Ubuntu", sans-serif;
+	font-size: 100%;
+	background-image: url("bg.png");
+	background-repeat: repeat;
+	color: rgba(150,150,150,1);
+}
+
+
+a {
+    text-decoration: none;
+    color: #7F4ACF;
+    opacity: 0.8;
+    text-decoration:none;
+    transition: all 0.5s ease;
+}
+    a:hover{
+	opacity: 1; 
+    }
+
+u {
+    border-bottom: 1px dashed white;
+    text-decoration: none;
+    color: white;
+    opacity: 1;
+}
+
+
+p {
+	line-height: 2em;
+	margin:0 0 20px;
+	text-align: center;
+}
+
+.wrap{
+	margin: auto;
+	background: rgba(255,255,255,0);
+}
+
+.wrap h1{
+    padding-top: 70px;
+    padding-left: 100px;
+    padding-right:100px;
+    padding-bottom: 40px;
+    color: white;
+    text-align: center;
+    letter-spacing: 2px;
+    font-weight: normal;
+}
+
+
+.type-wrap{
+    background: rgba(115,55,205,0.3);
+    margin: auto;
+    padding-left: 100px;
+    padding-right:100px;
+    padding-bottom: 20px;
+    padding-top: 20px;
+    text-align: center;
+    animation: colorloop 20s;
+    -moz-animation: colorloop 20s infinite; /* Firefox */
+    -webkit-animation: colorloop 20s infinite; /* Safari and Chrome */
+    
+}
+
+
+@-moz-keyframes colorloop /* Firefox */
+{
+    0%   {background:rgba(115,55,205,0.3);}
+    33%  {background:rgba(1,55,205,0.3);}
+    66%   {background:rgba(74,232,16,0.3);}
+    100%   {background:rgba(115,55,205,0.3);}
+}
+
+@-webkit-keyframes colorloop /* Safari and Chrome */
+{
+    0%   {background:rgba(115,55,205,0.3);}
+    33%  {background:rgba(1,55,205,0.3);}
+    66%   {background:rgba(74,232,16,0.3);}
+    100%   {background:rgba(115,55,205,0.3);}
+}
+
+.type-wrap a{
+    color: white;
+    letter-spacing: 2px;
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
+.type-wrap p{
+    text-align: left;
+    margin-top: -6px;
+}
+
+.typed {
+    width: 100%;
+}
+
+.content-wrap{
+    margin: auto;
+    /* padding-left: 100px; */
+    /* padding-right:100px; */
+    padding-bottom: 20px;
+    text-align: center;
+    border-top: #CCC 1px solid;
+    background: rgba(255,255,255,1);
+    /* margin:10px auto; */
+    /* padding:20px; */
+    /* border-radius:5px; */
+    /* border:#CCC 1px solid; */
+}
+
+.content-wrap p{
+    padding-left: 200px;
+    padding-right: 200px;
+}
+
+.content-wrap img{
+    margin-top: 30px;
+    margin-bottom: 50px;
+}
+
+.intro {
+    margin: auto;
+    width: 60%;
+    text-align: center;
+    padding-top: 40px;
+    padding-bottom: 20px;
+    font-style: normal;
+    line-height: 2;
+    color: rgba(80, 80, 80, 1);
+}
+
+.intro img{
+    margin-top: 40px;
+    margin-bottom: 50px;
+}
+
+
+.grid {
+  background: white;
+  margin: 20px 0 20px 0;
+  text-align: center;
+  
+  &:after {
+    /* Or @extend clearfix */
+    content: "";
+    display: table;
+    clear: both;
+  }
+}
+
+
+.col-1-2 {
+    width: 40%;
+}
+
+.col-1-2:last-of-type {
+    padding-right: 0;
+}
+
+.col-1-4 {
+    width: 20%;
+}
+
+.col-1-4:last-of-type {
+    padding-right: 0;
+}
+
+[class*='col-'] {
+    display: inline-block;
+    padding-right: 20px;   
+}
+
+.module {
+    padding: 20px;
+    background: #eee;
+    border-radius: 20px;
+}
+
+.module-nb {
+    padding: 0px;
+    height: 200px;
+}
+
+.module-nb img{
+    max-width:100%;
+    max-height:100%;
+}
+
+
+.grid-pad {
+  padding: 20px 0 20px 20px;
+  [class*='col-']:last-of-type {
+    padding-right: 0px;
+  }
+}
+
+
+.content-wrap h2 {
+    text-align: center;
+    padding-top: 25px;
+    padding-bottom: 20px;
+    color: rgba(80, 80, 80, 1);
+    font-weight: normal;
+    font-size: 24pt;
+}
+
+.content-wrap p {
+    text-align: left;
+    color: rgba(0, 0, 0, 1);
+    font-size: 80%;
+    /* border: #CCC 1px solid; */
+    margin-bottom: 15px;
+}
+
+.content-wrap img {
+    display: inline-block;
+    vertical-align: middle;
+    padding-bottom: 0px;
+    padding-left: 0px;
+}
+
+.articles p{
+    text-align: center;
+}
+
+#placeholder h1 {
+    padding-left: 0px;
+    color: rgba(80,80,80,1);
+}
+
+.note {
+    text-align: center;
+    font-size: 75%;
+    color: rgba(150,150,150,1);
+    /* border: #CCC 1px solid; */
+}
+
+.news {
+    background: rgba(245,245,245,1);
+    padding-bottom: 30px;
+}
+
+.news p{
+    text-align: center;
+}
+
+.outro {
+    text-align: center;
+}
+
+.outro img{
+    width: 100px;
+    border-radius: 50px;
+    margin: 10px;
+    padding: 0px;
+}
+
+.outro p{
+    text-align: center;
+    margin: 0px;
+    padding: 0px;
+}
+
+.foot{
+    margin:20px 0;
+    font-size: 0.75em;
+    text-align: center;
+}
