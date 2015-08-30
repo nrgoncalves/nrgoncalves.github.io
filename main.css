@@ -239,17 +239,18 @@ p {
 
 .note {
     text-align: center;
-    font-size: 75%;
+    font-size: 14px;
     color: rgba(150,150,150,1);
     /* border: #CCC 1px solid; */
 }
 
 .news {
-    background: rgba(245,245,245,1);
+    background: rgba(242,242,242,1);
     padding-bottom: 30px;
 }
 
 .news p{
+    font-size: 14px;
     text-align: center;
 }
 
