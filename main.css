@@ -1,4 +1,6 @@
-@import url(http://fonts.googleapis.com/css?family=Ubuntu:400,500);
+/* @import url(http://fonts.googleapis.com/css?family=Ubuntu:400,500); */
+
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,800);
 
 *{
 	padding:0;
@@ -6,7 +8,7 @@
 }
 
 body{
-	font-family: "Ubuntu", sans-serif;
+	font-family: "Open Sans", sans-serif;
 	font-size: 100%;
 	background-image: url("bg.png");
 	background-repeat: repeat;
@@ -61,15 +63,32 @@ p {
     margin: auto;
     padding-left: 100px;
     padding-right:100px;
-    padding-bottom: 20px;
-    padding-top: 20px;
-    text-align: center;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    text-align: right;
     animation: colorloop 20s;
     -moz-animation: colorloop 20s infinite; /* Firefox */
     -webkit-animation: colorloop 20s infinite; /* Safari and Chrome */
     
 }
 
+.title-left {
+    float: left;
+    color: white;
+    letter-spacing: 1px;
+    font-size: 14pt; 
+    font-weight: 400;
+    padding-top: 5px;
+    margin: 0px;
+}
+
+.menu-right {
+    float: right;
+    font-weight: 300;
+    padding-top: 8px;
+    margin: 0px;
+    
+}
 
 @-moz-keyframes colorloop /* Firefox */
 {
