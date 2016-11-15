@@ -369,6 +369,10 @@ p {
     text-align: center;
 }
 
+.timeline {
+    padding-top: 10px;
+}
+
 .outro {
     text-align: center;
 }
