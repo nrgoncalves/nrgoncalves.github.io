@@ -127,10 +127,10 @@ p {
 
 .timeline {
     float: left;
-    width: 25%;
-    padding-right: 18%;
+    width: 30%;
+    padding-right: 10%;
     padding-top: 10px;
-    padding-left: 7%;
+    padding-left: 10%;
 }
 
 
@@ -231,16 +231,37 @@ p {
 .intro {
     background: url(documents/images/bg2.png) no-repeat fixed;
     margin: auto;
-    width: 90%;
+    width: 80%;
     text-align: left;
     padding-top: 40px;
     padding-left: 10%;
+    padding-right: 10%;
     padding-bottom: 400px;
     font-style: normal;
     line-height: 2;
     color: rgba(255, 255, 255, 1);
 }
 
+@media screen and (max-width: 768px) {
+
+    .intro {
+	padding-bottom: 10px;
+    }
+    
+    .intro-text {
+	float: none;
+	width: 100%;
+    }
+
+    .timeline {
+	float: none;
+	width: 100%;
+	padding-right: 2px;
+	padding-left: 2px;
+    }
+
+    
+}
 
 ul {
     list-style-type: none;
