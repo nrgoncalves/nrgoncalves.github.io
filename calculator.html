@@ -32,6 +32,8 @@
 	<button class="button" onclick="appendToExpression('7')">7</button>
 	<button class="button" onclick="appendToExpression('8')">8</button>
 	<button class="button" onclick="appendToExpression('9')">9</button>
+    </div>
+    <div>
 	<button class="button" onclick="appendToExpression('(')">(</button>
 	<button class="button" onclick="appendToExpression(')')">)</button>
 	<button class="button" onclick="appendToExpression('+')">+</button>
@@ -95,7 +97,7 @@
 	     if (state==0) {
 		 if (s==')' && !canClosePar(expression)) { append = false; } 
 		 else if (s=='(' && !canOpenPar(expression)) { append = false; }
-		 else if (s=='Math.sqrt(' && isNumber(expression.slice(-1))) { append = false; }
+		 else if (s=='Math.sqrt(' && expression.length>0 && (expression.slice(-1)==')' || isNumber(expression.slice(-1)))) { append = false; }
 		 else { append = true; }
 	     } else { expression = ''; append = true; state = 0; }    
 	 }
