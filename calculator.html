@@ -5,24 +5,37 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
+     .wrap {
+	 min-height: 40px;
+     }
+     .display {
+	 font: 20px arial, sans-serif;
+	 padding-top: 10px;
+	 line-height: 1.2;
+	 text-decoration: none;
+	 width: 100%;
+	 display: inline-block;
+     }
      .button {
-	 background-color: #4CAF50;
-	 border: none;
+	 background-color: #20A000;
+	 border: 1px solid #FFF;
 	 color: white;
-	 width: 40px;
+	 width: 20%;
 	 padding-top: 15px;
 	 padding-bottom: 15px;
 	 text-align: center;
 	 display: inline-block;
 	 text-decoration: none;
 	 font-size: 16px;
-	 margin: 4px 2px;
+	 margin: 0px -2px 0px;
      }
     </style>
 </head>
 
 <body>
-    <div id="CalcDisplay"></div>
+    <div class="wrap">
+	<div id="CalcDisplay" class="display"></div>
+    </div>
     <div>
 	<button class="button" onclick="appendToExpression('0')">0</button>
 	<button class="button" onclick="appendToExpression('1')">1</button>
@@ -55,6 +68,7 @@
 	<button class="button" onclick="compute()">=</button>
 	<button class="button" onclick="clearAll()">C</button>
     </div>
+    <div id="msglog">Welcome! You will see a message here if we find any problems.</div>
 
     <script>
      // To do:
@@ -78,7 +92,7 @@
 
      function canOpenPar(s) { return (!isNumber(s.slice(-1)) || s=='') }
 
-     function canClosePar(s) { return (checkParBal(s)>0 && !isOperator(s.slice(-1)) && s.slice(-1) != '(') }
+     function canClosePar(s) { return (checkParBal(s)>0 && !isOperator(s.slice(-1)) && !'(.'.includes(s.slice(-1))) }
      
      function allowDot(s) { if (state==1) {return 0} else { return allowDotAcc(s, 0) } }
 
@@ -103,18 +117,22 @@
      
      function appendToExpression(s) {
 	 var append = false;
+	 message('');
 	 if (isOperator(s)==true) {
-	     if (isOperator(expression.slice(-1))) {
+	     if (isOperator(expression.slice(-1)) && expression.length>0) {
 		 expression = delLastChar(expression, 1);
 		 append = true;
-	     } else {
-		 if (expression.slice(-1)!='(') { append = true; }
-		 else { if (s=='-') { append = true; } }
+	     } else {  // previous element is not an operator
+		 if (expression.length > 0) {
+		     if (expression.slice(-1)!='(') { append = true; }
+		     else { if (s=='-') { s += '1*'; append = true; } }
+		 } else { if (s=='-') { s += '1*'; append = true; } }
 	     }
 	     state = 0;
 	 } else {
 	     if (state==0) {
 		 if (s==')' && !canClosePar(expression)) { append = false; }
+		 else if (isNumber(s) && expression.slice(-1)==')') { append = false }
 		 else if (s=='.') { if (allowDot(expression)==0 && expression.slice(-1)!=')') { append = true } }
 		 else if (s=='(' && !canOpenPar(expression)) { append = false; }
 		 else if (s=='sqrt(' && expression.length>0 && (expression.slice(-1)==')' || isNumber(expression.slice(-1)))) { append = false; }
@@ -153,7 +171,7 @@
 	 if (isValidExpression(arg)) {
 	     if (eval(replaceOperators(arg)) < 0) {
 		 isValid = false;
-		 console.log('Square root of negative number! SQRT(' + arg + ')');
+		 message('Square root of negative number => sqrt' + arg);
 	     } else { isValid = validateSqrtArg(cs.slice(j-1)) }
 	 } else { isValid = false; }
 	 return isValid;
@@ -161,7 +179,7 @@
      
      function isValidExpression(s) {
 	 var isValid = true;
-	 if (checkParBal(s)==0) {
+	 if (checkParBal(s)==0 && !isOperator(s.slice(-1))) {
 	     // division by zero: / and %
 	     for (var i=0; i<s.length-1; i++) {
 
@@ -181,8 +199,6 @@
 			 var denominator = s.slice(i+1, j-1);
 		     } else { // then we assume it is a sqrt function
 			 var k = "sqrt".length  // index of first parenthesis
-			 console.log(s[i+1+k])
-			 
 			 var balanced = -1;  // this code is duplicated from previous else if, need to rearrange.
 			 var j = i+k+2;
 			 while (balanced!=0 && s.length) {  // should be able to remove s.length here, I think...
@@ -195,7 +211,7 @@
 		     // make sure denominator does not evaluate to zero
 		     if (eval(replaceOperators(denominator))==0) {
 			 isValid = false;
-			 console.log('Division by zero! Denominator = ' + denominator)
+			 message('Division by zero! Denominator = ' + denominator)
 			 break;
 		     }
 		 }
@@ -211,8 +227,8 @@
      
      function compute() {
 	 if (isValidExpression(expression)==true) {
-	     console.log(expression)
-	     console.log(replaceOperators(expression))
+	     // console.log(expression)
+	     // console.log(replaceOperators(expression))
 	     expression = eval(replaceOperators(expression)).toString();
 	     state = 1;
 	     updateDisplay();
@@ -225,6 +241,8 @@
 	 updateDisplay()
      }
 
-     function updateDisplay() { document.getElementById("CalcDisplay").innerHTML = expression; }
+     function updateDisplay() { document.getElementById("CalcDisplay").innerHTML = expression }
+
+     function message(s) { document.getElementById("msglog").innerHTML = s }
     </script>
 </body>
