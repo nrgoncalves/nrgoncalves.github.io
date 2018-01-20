@@ -125,8 +125,8 @@
 	     } else {  // previous element is not an operator
 		 if (expression.length > 0) {
 		     if (expression.slice(-1)!='(') { append = true; }
-		     else { if (s=='-') { s += '1*'; append = true; } }
-		 } else { if (s=='-') { s += '1*'; append = true; } }
+		     else { if (s=='-') { append = true; } }
+		 } else { if (s=='-') { append = true; } }
 	     }
 	     state = 0;
 	 } else {
@@ -223,7 +223,7 @@
 	 return isValid	 
      }
 
-     function replaceOperators(e) { return e.split('^').join('**').split('sqrt').join('Math.sqrt'); }
+     function replaceOperators(e) { return e.split('^').join('**').split('sqrt').join('Math.sqrt').split('-').join('-1*'); }
      
      function compute() {
 	 if (isValidExpression(expression)==true) {
