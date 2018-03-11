@@ -1,5 +1,6 @@
 @import url(http://fonts.googleapis.com/css?family=Roboto:100,300,400,500);
 @import url(http://fonts.googleapis.com/css?family=Roboto+Mono);
+@import url('https://fonts.googleapis.com/css?family=Yantramanav:300');
 @import "compass/css3";
 
 *{
@@ -89,8 +90,9 @@ p {
     font-family: "Roboto", sans-serif;
     /* text-align: center; */
     color: white;
-    font-size: 16pt; 
+    font-size: 28pt; 
     font-weight: 300;
+    letter-spacing: 1px;
     padding-top: 0px;
     padding-bottom: 0px;
     padding-left: 10%;
