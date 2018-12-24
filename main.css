@@ -232,6 +232,7 @@ p {
 
 .intro {
     background: url(documents/images/bg2.png) no-repeat fixed;
+    background-size: cover;
     margin: auto;
     width: 80%;
     text-align: left;
