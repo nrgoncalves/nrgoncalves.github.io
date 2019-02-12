@@ -1,0 +1,22 @@
+[
+    {"latitude": 41.1,
+     "longitude": -8.6,
+     "label": "Porto",
+     "daterange": "Birth - 2010",
+     "description": "I did my B.Sc. in Biomedical Engineering back home, in Porto. It was there that I became interested in algorithms, signal processing and machine learning. During my final year project, I developed a prototype application for visualization of brain activity and automatic detection of anomalous brain activity."},
+    {"latitude": 50.775345,
+     "longitude": 6.083887,
+     "label": "Aachen",
+     "daterange": "2010 - 2011",
+     "description": "After completing my undergraduate degree, I moved over to Germany to embark on a double M.Sc. degree in Biomedical Engineering at RWTH Aachen, one of the 11 German elite universities. In parallel, I worked as a research assistant at the Helmholtz Institute Aachen, where I developed an application for monitoring and analysis of electrical impedance tomography in collaboration with a leading German company specializing in medical devices."},
+    {"latitude": 53.349804,
+     "longitude": -6.260310,
+     "label": "Dublin",
+     "daterange": "2011 - 2012",
+     "description": "I moved on to complete the final year of my double M.Sc. at Trinity College Dublin, which offered specialized training in neuroengineering. As my final project, I sought to explore recent signal processing and data analysis methods to isolate brain activity in a non-invasive manner and with unprecedented level of precision. This was the point at which my general interest in applying quantitative methods to solve difficult problems crystallized into a deep interest in computation, the brain and -- thus -- artificial intelligence."},
+    {"latitude": 52.205338,
+     "longitude": 0.121817,
+     "label": "Cambridge",
+     "daterange": "2014 - 2018",
+     "description": "I moved to Cambridge to study the brain computations that support our ability to see in 3D. In particular, my efforts concentrated on (i) decoding perceived depth based on human brain activity and (ii) developing mechanistic models that explain the physiological properties of neurons involve in depth perception. I used a variety of machine learning algorithms, with an emphasis on convolutional neural networks. I found that these models develop striking similarities to brain. Importantly, they led us to understand and demonstrate the purpose of a particular class of neurons that has been regarded as very puzzling over the last 25 years. The University of Cambridge awarded me a Ph.D. in 2018."}
+]

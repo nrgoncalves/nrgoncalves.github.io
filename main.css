@@ -285,3 +285,12 @@ li:hover {
     text-align: left;
     margin-bottom: 4px;
 }
+
+#info-date {
+    color: var(--Red);
+}
+
+.label {
+    cursor: pointer;
+    font-size: 10px;
+}

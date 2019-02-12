@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="en">
+    <head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Nuno Gonçalves</title>
+	<link href="main.css" rel="stylesheet"/>
+	<script async defer src="https://buttons.github.io/buttons.js"></script>
+    </head>
+    <body>
+
+	<div class="wrap">
+            <div class="type-wrap">
+		<div class="title">
+		    Nuno Gonçalves
+		</div>
+		<div class="menu">
+		    <a href=index.html>Home</a>
+		    <a href=notebooks.html>Tutorials</a>
+		</div>
+            </div>
+
+	    <div class="content-wrap">
+
+		<div class="news" style="text-align: center">
+		    <svg></svg>
+		    <div style="width: 960px; min-height: 400px; display: inline-block;">
+			<h2 id="info-title" style="text-align: left;"></h2>
+			<p id="info-date"></p>
+			<p id="info"></p>
+		    </div>
+		</div>
+
+	    </div>
+	</div>
+        <script src="https://d3js.org/d3.v4.min.js"></script>
+        <script src="https://d3js.org/topojson.v1.min.js"></script>
+        <script>
+         const width = 960;
+         const height = 500;
+         let locations = [];
+         const svg = d3.select('svg')
+                       .attr('width', width).attr('height', height);
+         const markerGroup = svg.append('g');
+	 const labelGroup = svg.append('g');
+         const projection = d3.geoOrthographic().scale(800);
+         const initialScale = projection.scale();
+         const path = d3.geoPath().projection(projection);
+         const center = [width/2, height/2];
+
+	 const welcometitle = "Hello!"
+	 const welcometext = "This is a small interactive visualization of my educational and professional path. Hover over the locations to find out what I've been up to."
+
+	 d3.select("#info-title").text(welcometitle);
+	 d3.select("#info").text(welcometext);
+	 projection.rotate([ -1.169642098369117, -47.2471749489329, 0 ])
+
+         drawGlobe();
+         drawGraticule();
+
+	 let rotate0, coords0;
+         const coords = () => projection.rotate(rotate0)
+					.invert([d3.event.x, d3.event.y]);
+
+	 svg
+             .call(d3.drag()
+                     .on('start', () => {
+			 rotate0 = projection.rotate();
+			 coords0 = coords();
+			 moving = true;
+                     })
+                     .on('drag', () => {
+			 const coords1 = coords();
+			 projection.rotate([
+			     rotate0[0] + coords1[0] - coords0[0],
+			     rotate0[1] + coords1[1] - coords0[1],
+			 ])
+			 drawMarkers();
+			 svg.selectAll("path").attr("d", path);
+                     })
+                     .on('end', () => {
+			 moving = false;
+			 drawMarkers();
+			 svg.selectAll("path").attr("d", path);
+                     })
+                 // Goal: let zoom handle pinch gestures (not working correctly).
+                     .filter(() => !(d3.event.touches && d3.event.touches.length === 2))
+             )
+	     .call(d3.zoom()
+                     .on('zoom', () => {
+			 projection.scale(initialScale * d3.event.transform.k);
+			 svg.selectAll("path").attr("d", path);
+			 drawMarkers();
+                     })
+                     .on('start', () => {
+			 moving = true;
+                     })
+                     .on('end', () => {
+			 moving = false;
+			 svg.selectAll("path").attr("d", path);
+			 drawMarkers();
+		     })
+	     )
+
+
+         function drawGlobe() {
+             d3.queue()
+               .defer(d3.json, 'https://gist.githubusercontent.com/mbostock/4090846/raw/d534aba169207548a8a3d670c9c2cc719ff05c47/world-110m.json')
+               .defer(d3.json, 'icvdata.json')
+               .await((error, worldData, locationData) => {
+		   svg.selectAll(".segment")
+                      .data(topojson.feature(worldData, worldData.objects.countries).features)
+                      .enter().append("path")
+                      .attr("class", "segment")
+                      .attr("d", path)
+                      .style("stroke", "#888")
+                      .style("stroke-width", "1px")
+                      .style("fill", (d, i) => '#e5e5e5')
+                      .style("opacity", 0.6);
+                   locations = locationData;
+		   drawMarkers();
+               });
+         }
+
+         function drawGraticule() {
+             const graticule = d3.geoGraticule()
+				 .step([10, 10]);
+
+             svg.append("path")
+                .datum(graticule)
+                .attr("class", "graticule")
+                .attr("d", path)
+                .style("fill", "none")
+                .style("stroke", "#ccc");
+         }
+
+	 function drawLabels() {
+	     const labels = labelGroup.attr("class", "labels").selectAll('text').data(locations);
+	     labels.enter()
+		   .append("text")
+		   .attr("class", "label")
+		   .text(d => d.label)
+		   .on("mouseover", (d) => {
+		       d3.select("#info-title").text(d.label)
+		       d3.select("#info-date").text(d.daterange)
+		       d3.select("#info").text(d.description)
+    		   });
+	     position_labels()
+	 }
+
+	 function position_labels() {
+
+	     svg.selectAll(".label")
+		.attr("text-anchor", (d) => {
+		    var x = projection([d.longitude, d.latitude])[0];
+		    return x < width/2-20 ? "end" :
+			       x < width/2+20 ? "middle" :
+				   "start"
+		})
+		.attr("transform", (d) => {
+		    var loc = projection([d.longitude, d.latitude]),
+		        x = loc[0],
+		        y = loc[1];
+		    var offset = x < width/2 ? -5 : 5;
+		    return "translate(" + (x+offset) + "," + (y-6) + ")"
+		})
+		.style("display", (d) => {
+		    var d = d3.geoDistance([d.longitude, d.latitude], projection.invert(center));
+		    return (d > 1.57) ? 'none' : 'inline';
+		})
+	     labelGroup.raise()
+	     /* labelGroup.each(function () {
+	      *     this.parentNode.appendChild(this);
+	      * });
+	      */
+	 }
+
+         function drawMarkers() {
+             const markers = markerGroup.selectAll('circle')
+					.data(locations);
+             markers
+                 .enter()
+                 .append('circle')
+                 .merge(markers)
+                 .attr('cx', d => projection([d.longitude, d.latitude])[0])
+                 .attr('cy', d => projection([d.longitude, d.latitude])[1])
+                 .attr('fill', d => {
+                     const coordinate = [d.longitude, d.latitude];
+                     gdistance = d3.geoDistance(coordinate, projection.invert(center));
+                     return gdistance > 1.57 ? 'none' : 'purple';
+                 })
+                 .attr('r', 4)
+
+	     markerGroup.raise()
+	     drawLabels();
+         }
+        </script>
+
+    </body>
+</html>
