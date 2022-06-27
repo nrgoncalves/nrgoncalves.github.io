@@ -7,7 +7,7 @@ publishDir: docs
 params:
   homeInfoParams:
     Title: "Hi there \U0001F44B"
-    Content: "Nuno here. I currently live in Cambridge (UK) and work at Unipart Digital, where 
+    Content: "My name is Nuno. I currently live in Cambridge (UK) and work at Unipart Digital, where 
     I focus on applying machine learning techniques to logistics and manufacturing.
 
 
@@ -25,14 +25,14 @@ params:
 menu:
   main:
     - identifier: categories
-      name: categories
+      name: Categories
       url: /categories/
       weight: 10
     - identifier: tags
-      name: tags
+      name: Tags
       url: /tags/
       weight: 20
-    # - identifier: example
-    #   name: example.org
-    #   url: https://example.org
-    #   weight: 30
+    - identifier: publications
+      name: Publications
+      url: https://scholar.google.co.uk/citations?user=2xoRsiQAAAAJ&hl=en
+      weight: 30
