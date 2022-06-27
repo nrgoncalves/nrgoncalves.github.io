@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Tags on Nuno Gonçalves</title>
+    <link>https://nrgoncalves.github.io/tags/</link>
+    <description>Recent content in Tags on Nuno Gonçalves</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-gb</language>
+    <lastBuildDate>Mon, 14 Nov 2016 12:54:15 +0100</lastBuildDate><atom:link href="https://nrgoncalves.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Computational neuroscience</title>
+      <link>https://nrgoncalves.github.io/tags/computational-neuroscience/</link>
+      <pubDate>Mon, 14 Nov 2016 12:54:15 +0100</pubDate>
+      
+      <guid>https://nrgoncalves.github.io/tags/computational-neuroscience/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Multisensory integration</title>
+      <link>https://nrgoncalves.github.io/tags/multisensory-integration/</link>
+      <pubDate>Mon, 14 Nov 2016 12:54:15 +0100</pubDate>
+      
+      <guid>https://nrgoncalves.github.io/tags/multisensory-integration/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Stereopsis</title>
+      <link>https://nrgoncalves.github.io/tags/stereopsis/</link>
+      <pubDate>Sat, 01 Oct 2016 12:54:15 +0100</pubDate>
+      
+      <guid>https://nrgoncalves.github.io/tags/stereopsis/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

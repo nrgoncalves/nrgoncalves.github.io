@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Stereopsis on Nuno Gonçalves</title>
+    <link>https://nrgoncalves.github.io/tags/stereopsis/</link>
+    <description>Recent content in Stereopsis on Nuno Gonçalves</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-gb</language>
+    <lastBuildDate>Sat, 01 Oct 2016 12:54:15 +0100</lastBuildDate><atom:link href="https://nrgoncalves.github.io/tags/stereopsis/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Adapting the disparity energy model to natural stimuli</title>
+      <link>https://nrgoncalves.github.io/posts/dem-natural/</link>
+      <pubDate>Sat, 01 Oct 2016 12:54:15 +0100</pubDate>
+      
+      <guid>https://nrgoncalves.github.io/posts/dem-natural/</guid>
+      <description>A short notebook on the disparity energy model and responses to correlated and anticorrelated binocular images.
+Take a look at the notebook here.</description>
+    </item>
+    
+    <item>
+      <title>Marr and Poggio&#39;s cooperative stereo algorithm</title>
+      <link>https://nrgoncalves.github.io/posts/marr-poggio/</link>
+      <pubDate>Sat, 01 Oct 2016 12:54:15 +0100</pubDate>
+      
+      <guid>https://nrgoncalves.github.io/posts/marr-poggio/</guid>
+      <description>David Marr was a bright computer scientist whose work still has a remarkable impact in modern computational neuroscience. He published several papers on stereoscopic vision, of which the most popular I explore here.
+Take a look at the notebook here.</description>
+    </item>
+    
+    <item>
+      <title>A brief demo of the classical disparity energy model</title>
+      <link>https://nrgoncalves.github.io/posts/dem-julia/</link>
+      <pubDate>Mon, 14 Sep 2015 12:54:15 +0100</pubDate>
+      
+      <guid>https://nrgoncalves.github.io/posts/dem-julia/</guid>
+      <description>Nearly a quarter of a century has passed since Ohzawa and colleagues proposed a model of how cortical neurons in primary visual cortex might support depth discrimination. Here is a demo of how it works, written in Julia.
+Take a look at the notebook here.</description>
+    </item>
+    
+  </channel>
+</rss>

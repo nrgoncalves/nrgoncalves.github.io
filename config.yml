@@ -1,0 +1,38 @@
+baseURL: https://nrgoncalves.github.io/
+languageCode: en-gb
+title: Nuno Gonçalves
+theme: "PaperMod"
+publishDir: docs
+
+params:
+  homeInfoParams:
+    Title: "Hi there \U0001F44B"
+    Content: "Nuno here. I currently live in Cambridge (UK) and work at Unipart Digital, where 
+    I focus on applying machine learning techniques to logistics and manufacturing.
+
+
+    Previously, I did my Ph.D. at the University of Cambridge, mostly trying to understand neural
+    computations underlying 3D vision."
+
+  socialIcons:
+    - name: twitter
+      url: "https://twitter.com/nr_goncalves"
+    - name: linkedin
+      url: "https://www.linkedin.com/in/meetnuno/"
+    - name: github
+      url: "https://github.com/nrgoncalves"
+
+menu:
+  main:
+    - identifier: categories
+      name: categories
+      url: /categories/
+      weight: 10
+    - identifier: tags
+      name: tags
+      url: /tags/
+      weight: 20
+    # - identifier: example
+    #   name: example.org
+    #   url: https://example.org
+    #   weight: 30
