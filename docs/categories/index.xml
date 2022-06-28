@@ -6,7 +6,16 @@
     <description>Recent content in Categories on Nuno Gonçalves</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-gb</language>
-    <lastBuildDate>Mon, 14 Nov 2016 12:54:15 +0100</lastBuildDate><atom:link href="https://nrgoncalves.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 29 Apr 2020 12:54:15 +0100</lastBuildDate><atom:link href="https://nrgoncalves.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Articles</title>
+      <link>https://nrgoncalves.github.io/categories/articles/</link>
+      <pubDate>Wed, 29 Apr 2020 12:54:15 +0100</pubDate>
+      
+      <guid>https://nrgoncalves.github.io/categories/articles/</guid>
+      <description></description>
+    </item>
+    
     <item>
       <title>Notebooks</title>
       <link>https://nrgoncalves.github.io/categories/notebooks/</link>
