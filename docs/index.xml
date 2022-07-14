@@ -6,7 +6,17 @@
     <description>Recent content on Nuno Gonçalves</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-gb</language>
-    <lastBuildDate>Wed, 29 Apr 2020 12:54:15 +0100</lastBuildDate><atom:link href="https://nrgoncalves.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 13 Jul 2022 11:21:15 +0100</lastBuildDate><atom:link href="https://nrgoncalves.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Puppet with a Agent-Master architecture</title>
+      <link>https://nrgoncalves.github.io/posts/puppetserver/</link>
+      <pubDate>Wed, 13 Jul 2022 11:21:15 +0100</pubDate>
+      
+      <guid>https://nrgoncalves.github.io/posts/puppetserver/</guid>
+      <description>There are many resources out there which—rightly—focus on teaching Puppet using simple architectures, e.g. a single node, masterless setup. However, I found less info on how to set up Puppet with an Agent-Master architecture.
+This short article gives a very high-level overview of the main steps. It is not a self-sufficient tutorial by any means—but I am hoping it will still be useful for those trying to understand the big picture.</description>
+    </item>
+    
     <item>
       <title>Privacy-compatible automated contact tracing</title>
       <link>https://nrgoncalves.github.io/posts/cx/</link>

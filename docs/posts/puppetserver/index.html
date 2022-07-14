@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>Puppet with a Agent-Master architecture | Nuno Gonçalves</title>
+<meta name="keywords" content="Puppet, Configuration management">
+<meta name="description" content="There are many resources out there which—rightly—focus on teaching Puppet using simple architectures, e.g. a single node, masterless setup. However, I found less info on how to set up Puppet with an Agent-Master architecture.
+This short article gives a very high-level overview of the main steps. It is not a self-sufficient tutorial by any means—but I am hoping it will still be useful for those trying to understand the big picture.">
+<meta name="author" content="">
+<link rel="canonical" href="https://nrgoncalves.github.io/posts/puppetserver/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.d7fb4cbf980fe688a21621b06a795933c4e6bb2d4070ec940667af1715d84af2.css" integrity="sha256-1/tMv5gP5oiiFiGwanlZM8Tmuy1AcOyUBmevFxXYSvI=" rel="preload stylesheet" as="style">
+<script defer crossorigin="anonymous" src="/assets/js/highlight.f413e19d0714851f6474e7ee9632408e58ac146fbdbe62747134bea2fa3415e0.js" integrity="sha256-9BPhnQcUhR9kdOfuljJAjlisFG&#43;9vmJ0cTS&#43;ovo0FeA="
+    onload="hljs.initHighlightingOnLoad();"></script>
+<link rel="icon" href="https://nrgoncalves.github.io/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://nrgoncalves.github.io/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://nrgoncalves.github.io/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://nrgoncalves.github.io/apple-touch-icon.png">
+<link rel="mask-icon" href="https://nrgoncalves.github.io/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --hljs-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><meta property="og:title" content="Puppet with a Agent-Master architecture" />
+<meta property="og:description" content="There are many resources out there which—rightly—focus on teaching Puppet using simple architectures, e.g. a single node, masterless setup. However, I found less info on how to set up Puppet with an Agent-Master architecture.
+This short article gives a very high-level overview of the main steps. It is not a self-sufficient tutorial by any means—but I am hoping it will still be useful for those trying to understand the big picture." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://nrgoncalves.github.io/posts/puppetserver/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-07-13T11:21:15&#43;01:00" />
+<meta property="article:modified_time" content="2022-07-13T11:21:15&#43;01:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Puppet with a Agent-Master architecture"/>
+<meta name="twitter:description" content="There are many resources out there which—rightly—focus on teaching Puppet using simple architectures, e.g. a single node, masterless setup. However, I found less info on how to set up Puppet with an Agent-Master architecture.
+This short article gives a very high-level overview of the main steps. It is not a self-sufficient tutorial by any means—but I am hoping it will still be useful for those trying to understand the big picture."/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://nrgoncalves.github.io/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "Puppet with a Agent-Master architecture",
+      "item": "https://nrgoncalves.github.io/posts/puppetserver/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Puppet with a Agent-Master architecture",
+  "name": "Puppet with a Agent-Master architecture",
+  "description": "There are many resources out there which—rightly—focus on teaching Puppet using simple architectures, e.g. a single node, masterless setup. However, I found less info on how to set up Puppet with an Agent-Master architecture.\nThis short article gives a very high-level overview of the main steps. It is not a self-sufficient tutorial by any means—but I am hoping it will still be useful for those trying to understand the big picture.",
+  "keywords": [
+    "Puppet", "Configuration management"
+  ],
+  "articleBody": "There are many resources out there which—rightly—focus on teaching Puppet using simple architectures, e.g. a single node, masterless setup. However, I found less info on how to set up Puppet with an Agent-Master architecture.\nThis short article gives a very high-level overview of the main steps. It is not a self-sufficient tutorial by any means—but I am hoping it will still be useful for those trying to understand the big picture.\nBriefly, we need multiple VMs. One VM will act as the master VM and will hold the Puppet manifests. Other VMs will be nodes—they will be running the Puppet Agent periodically to get the desired configuration from the master and execute the required tasks to make the node’s state aligned with what is defined in the Puppet manifests.\nPuppet master We first need to create a virtual machine to act as our puppet master. Here we’re using a VM running CentOS 7. Let’s assume its FQDN is puppet.myproject.example.com.\nsudo su - rpm -Uvh https://yum.puppet.com/puppet6/puppet6-release-el-7.noarch.rpm yum install puppetserver systemctl enable --now puppetserver The puppetserver service should now be running on your puppet master VM. To verify that the puppetserver CLI has been installed correctly, run\npuppetserver -v on a new shell. If this does not work, it is probably because puppetserver has not been added to your PATH, so you’ll need to investigate why that was the case.\nYou should also test that the puppet agent can run on the master:\nsudo su - puppet agent --test --server {FQDN} If the above agent run completed successfully, we are pretty much done with the initial master configuration.\nPuppet agent on a node VM Now we need to create at least one node VM to test if things really are working. Let’s assume the VM is running CentOS 7 and that the FQDN is node01.myproject.example.com.\nLet’s start by installing the agent and enabling it as a service\nsudo yum install puppet-agent sudo /opt/puppetlabs/bin/puppet resource service puppet ensure=running enable=true Now we need to add puppet to our PATH and configure the server\nsource /etc/profile.d/puppet-agent.sh puppet config set server puppet.myproject.example.com --section main No we need to get the node talking to the master. To do that, we first run\npuppet ssl bootstrap on the node VM. This should have requested a certificate signature to the master VM, which we now need to sign. SSH into the master VM, change to root and run\npuppetserver ca sign --certname node01.myproject.example.com This should have successfully signed the certificate for the node VM, which means that the puppet master and the node VM should now be able to work together.\nWe need to repeat this section for every node you want to manage with puppet, e.g. node02.myproject.puppet.com, node03.myproject.puppet.com and so on.\nAt a high-level, this is pretty much it. The next step is to actually start writing some puppet manifests.\nWriting Puppet manifests Puppet’s installation process should have created a set of files and folders on the master VM. They are located under /etc/puppetlabs/code/. This is where Puppet expects to find manifests. A standard production environment is created by default, with a standard structure for organising Puppet manifests. These can be found under /etc/puppetlabs/code/environments/production.\nIt is a good idea to track changes in these files using a version control tool like git, and pull those changes onto the master VM once you are ready to test or apply them.\nI am going to start by creating a simple file resource just for testing purposes and I will apply it to all nodes. I create a manifests/site.pp file with the following contents\nnode default { file {'/tmp/test.txt': content =\u003e 'test file content', } } This asks Puppet to create a file /tmp/test.txt with the content test file content for all nodes.\nTo test that this is working, ssh into the node VM and run:\npuppet agent --test The agent will then retrieve the desired system state from the master, and execute the corresponding tasks to achieve such state. If all worked well, the file /tmp/test.txt should now exist on the node VM.\nThis is an embarrassingly simple example of what we can do with Puppet—for a proper treatment of Puppet’s features, take a look at Puppet’s documentation.\nConclusion The aim of this short article was to provide a very high-level overview of how the basic steps that are required to set up Puppet with an Agent-Master architecture.\nI have skipped over lots of details (e.g. networking), but the goal here is to focus on the “big picture” rather than setup details, which will differ significantly depending on the OS platform or cloud provider of choice.\n",
+  "wordCount" : "766",
+  "inLanguage": "en",
+  "datePublished": "2022-07-13T11:21:15+01:00",
+  "dateModified": "2022-07-13T11:21:15+01:00",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://nrgoncalves.github.io/posts/puppetserver/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Nuno Gonçalves",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://nrgoncalves.github.io/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://nrgoncalves.github.io/" accesskey="h" title="Nuno Gonçalves (Alt + H)">Nuno Gonçalves</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://nrgoncalves.github.io/categories/" title="Categories">
+                    <span>Categories</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://nrgoncalves.github.io/tags/" title="Tags">
+                    <span>Tags</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://scholar.google.co.uk/citations?user=2xoRsiQAAAAJ&amp;hl=en" title="Publications">
+                    <span>Publications</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    
+    <h1 class="post-title">
+      Puppet with a Agent-Master architecture
+    </h1>
+    <div class="post-meta"><span title='2022-07-13 11:21:15 +0100 BST'>July 13, 2022</span>
+
+</div>
+  </header> 
+  <div class="post-content"><p>There are many resources out there which—rightly—focus on teaching Puppet using
+simple architectures, e.g. a single node, masterless setup. However, I found
+less info on how to set up Puppet with an Agent-Master architecture.</p>
+<p>This short article gives a very high-level overview of the main steps. It is not
+a self-sufficient tutorial by any means—but I am hoping it will still be useful
+for those trying to understand the big picture.</p>
+<p>Briefly, we need multiple VMs. One VM will act as the master VM and will hold
+the Puppet manifests. Other VMs will be nodes—they will be running the Puppet
+Agent periodically to get the desired configuration from the master and
+execute the required tasks to make the node&rsquo;s state aligned with what is
+defined in the Puppet manifests.</p>
+<h2 id="puppet-master">Puppet master<a hidden class="anchor" aria-hidden="true" href="#puppet-master">#</a></h2>
+<p>We first need to create a virtual machine to act as our puppet master. Here
+we&rsquo;re using a VM running CentOS 7. Let&rsquo;s assume its FQDN is
+<code>puppet.myproject.example.com</code>.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>sudo su -
+</span></span><span style="display:flex;"><span>rpm -Uvh https://yum.puppet.com/puppet6/puppet6-release-el-7.noarch.rpm
+</span></span><span style="display:flex;"><span>yum install puppetserver
+</span></span><span style="display:flex;"><span>systemctl enable --now puppetserver
+</span></span></code></pre></div><p>The <code>puppetserver</code> service should now be running on your puppet master VM. To
+verify that the <code>puppetserver</code> CLI has been installed correctly, run</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>puppetserver -v
+</span></span></code></pre></div><p>on a new shell. If this does not work, it is probably because <code>puppetserver</code> has
+not been added to your <code>PATH</code>, so you&rsquo;ll need to investigate why that was the
+case.</p>
+<p>You should also test that the puppet agent can run on the master:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>sudo su -
+</span></span><span style="display:flex;"><span>puppet agent --test --server <span style="color:#f92672">{</span>FQDN<span style="color:#f92672">}</span>
+</span></span></code></pre></div><p>If the above agent run completed successfully, we are pretty much done with the
+initial master configuration.</p>
+<h2 id="puppet-agent-on-a-node-vm">Puppet agent on a node VM<a hidden class="anchor" aria-hidden="true" href="#puppet-agent-on-a-node-vm">#</a></h2>
+<p>Now we need to create at least one node VM to test if things really are working.
+Let&rsquo;s assume the VM is running CentOS 7 and that the FQDN is
+<code>node01.myproject.example.com</code>.</p>
+<p>Let&rsquo;s start by installing the agent and enabling it as a service</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>sudo yum install puppet-agent
+</span></span><span style="display:flex;"><span>sudo /opt/puppetlabs/bin/puppet resource service puppet ensure<span style="color:#f92672">=</span>running enable<span style="color:#f92672">=</span>true
+</span></span></code></pre></div><p>Now we need to add <code>puppet</code> to our PATH and configure the server</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>source /etc/profile.d/puppet-agent.sh
+</span></span><span style="display:flex;"><span>puppet config set server puppet.myproject.example.com --section main
+</span></span></code></pre></div><p>No we need to get the node talking to the master. To do that, we first run</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>puppet ssl bootstrap
+</span></span></code></pre></div><p>on the node VM. This should have requested a certificate signature to the master VM,
+which we now need to sign. SSH into the master VM, change to root and run</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>puppetserver ca sign --certname node01.myproject.example.com
+</span></span></code></pre></div><p>This should have successfully signed the certificate for the node VM, which means
+that the puppet master and the node VM should now be able to work together.</p>
+<p>We need to repeat this section for every node you want to manage with puppet, e.g.
+<code>node02.myproject.puppet.com</code>, <code>node03.myproject.puppet.com</code> and so on.</p>
+<p>At a high-level, this is pretty much it. The next step is to actually start
+writing some puppet manifests.</p>
+<h2 id="writing-puppet-manifests">Writing Puppet manifests<a hidden class="anchor" aria-hidden="true" href="#writing-puppet-manifests">#</a></h2>
+<p>Puppet&rsquo;s installation process should have created a set of files and folders on
+the master VM. They are located under <code>/etc/puppetlabs/code/</code>. This is where
+Puppet expects to find manifests. A standard production environment is created
+by default, with a standard structure for organising Puppet manifests. These can
+be found under <code>/etc/puppetlabs/code/environments/production</code>.</p>
+<p>It is a good idea to track changes in these files using a version control tool
+like <code>git</code>, and pull those changes onto the master VM once you are ready to test
+or apply them.</p>
+<p>I am going to start by creating a simple file resource just for testing purposes
+and I will apply it to all nodes. I create a <code>manifests/site.pp</code> file with the
+following contents</p>
+<pre tabindex="0"><code>node default {
+  file {&#39;/tmp/test.txt&#39;:
+    content =&gt; &#39;test file content&#39;,
+  }
+}
+</code></pre><p>This asks Puppet to create a file <code>/tmp/test.txt</code> with the content <code>test file content</code>
+for all nodes.</p>
+<p>To test that this is working, ssh into the node VM and run:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>puppet agent --test
+</span></span></code></pre></div><p>The agent will then retrieve the desired system state from the master, and execute
+the corresponding tasks to achieve such state. If all worked well, the file
+<code>/tmp/test.txt</code> should now exist on the node VM.</p>
+<p>This is an embarrassingly simple example of what we can do with Puppet—for a proper
+treatment of Puppet&rsquo;s features, take a look at Puppet&rsquo;s documentation.</p>
+<h2 id="conclusion">Conclusion<a hidden class="anchor" aria-hidden="true" href="#conclusion">#</a></h2>
+<p>The aim of this short article was to provide a very high-level overview of how the
+basic steps that are required to set up Puppet with an Agent-Master architecture.</p>
+<p>I have skipped over lots of details (e.g. networking), but the goal here is to
+focus on the &ldquo;big picture&rdquo; rather than setup details, which will differ
+significantly depending on the OS platform or cloud provider of choice.</p>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="https://nrgoncalves.github.io/tags/puppet/">Puppet</a></li>
+      <li><a href="https://nrgoncalves.github.io/tags/configuration-management/">Configuration management</a></li>
+    </ul>
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+    <span>&copy; 2022 <a href="https://nrgoncalves.github.io/">Nuno Gonçalves</a></span>
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+</body>
+
+</html>

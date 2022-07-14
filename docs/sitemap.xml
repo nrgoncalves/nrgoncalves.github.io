@@ -2,10 +2,31 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://nrgoncalves.github.io/categories/articles/</loc>
-    <lastmod>2020-04-29T12:54:15+01:00</lastmod>
-  </url><url>
     <loc>https://nrgoncalves.github.io/categories/</loc>
+    <lastmod>2022-07-13T11:21:15+01:00</lastmod>
+  </url><url>
+    <loc>https://nrgoncalves.github.io/tags/configuration-management/</loc>
+    <lastmod>2022-07-13T11:21:15+01:00</lastmod>
+  </url><url>
+    <loc>https://nrgoncalves.github.io/categories/infrastructure/</loc>
+    <lastmod>2022-07-13T11:21:15+01:00</lastmod>
+  </url><url>
+    <loc>https://nrgoncalves.github.io/</loc>
+    <lastmod>2022-07-13T11:21:15+01:00</lastmod>
+  </url><url>
+    <loc>https://nrgoncalves.github.io/posts/</loc>
+    <lastmod>2022-07-13T11:21:15+01:00</lastmod>
+  </url><url>
+    <loc>https://nrgoncalves.github.io/tags/puppet/</loc>
+    <lastmod>2022-07-13T11:21:15+01:00</lastmod>
+  </url><url>
+    <loc>https://nrgoncalves.github.io/posts/puppetserver/</loc>
+    <lastmod>2022-07-13T11:21:15+01:00</lastmod>
+  </url><url>
+    <loc>https://nrgoncalves.github.io/tags/</loc>
+    <lastmod>2022-07-13T11:21:15+01:00</lastmod>
+  </url><url>
+    <loc>https://nrgoncalves.github.io/categories/articles/</loc>
     <lastmod>2020-04-29T12:54:15+01:00</lastmod>
   </url><url>
     <loc>https://nrgoncalves.github.io/tags/covid/</loc>
@@ -14,19 +35,10 @@
     <loc>https://nrgoncalves.github.io/tags/javascript/</loc>
     <lastmod>2020-04-29T12:54:15+01:00</lastmod>
   </url><url>
-    <loc>https://nrgoncalves.github.io/</loc>
-    <lastmod>2020-04-29T12:54:15+01:00</lastmod>
-  </url><url>
-    <loc>https://nrgoncalves.github.io/posts/</loc>
-    <lastmod>2020-04-29T12:54:15+01:00</lastmod>
-  </url><url>
     <loc>https://nrgoncalves.github.io/tags/privacy/</loc>
     <lastmod>2020-04-29T12:54:15+01:00</lastmod>
   </url><url>
     <loc>https://nrgoncalves.github.io/posts/cx/</loc>
-    <lastmod>2020-04-29T12:54:15+01:00</lastmod>
-  </url><url>
-    <loc>https://nrgoncalves.github.io/tags/</loc>
     <lastmod>2020-04-29T12:54:15+01:00</lastmod>
   </url><url>
     <loc>https://nrgoncalves.github.io/posts/normalization-msi/</loc>
