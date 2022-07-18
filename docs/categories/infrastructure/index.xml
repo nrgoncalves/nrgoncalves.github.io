@@ -6,7 +6,17 @@
     <description>Recent content in Infrastructure on Nuno Gonçalves</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-gb</language>
-    <lastBuildDate>Wed, 13 Jul 2022 11:21:15 +0100</lastBuildDate><atom:link href="https://nrgoncalves.github.io/categories/infrastructure/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 14 Jul 2022 15:09:12 +0100</lastBuildDate><atom:link href="https://nrgoncalves.github.io/categories/infrastructure/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Spark Standalone Cluster</title>
+      <link>https://nrgoncalves.github.io/posts/spark-standalone-cluster/</link>
+      <pubDate>Thu, 14 Jul 2022 15:09:12 +0100</pubDate>
+      
+      <guid>https://nrgoncalves.github.io/posts/spark-standalone-cluster/</guid>
+      <description>This is a quick note on how to set up a Spark cluster in standalone mode. This is useful if you want to setup a cluster for your own development purposes or if you just want to do it for fun—for more serious use cases, Spark clusters should be setup on top of YARN or Kubernetes.
+You will need to create a few VMs: one VM for the cluster manager and then one or more VMs where the executors will be running.</description>
+    </item>
+    
     <item>
       <title>Puppet with a Agent-Master architecture</title>
       <link>https://nrgoncalves.github.io/posts/puppetserver/</link>

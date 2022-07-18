@@ -6,7 +6,25 @@
     <description>Recent content in Tags on Nuno Gonçalves</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-gb</language>
-    <lastBuildDate>Wed, 13 Jul 2022 11:21:15 +0100</lastBuildDate><atom:link href="https://nrgoncalves.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 14 Jul 2022 15:09:12 +0100</lastBuildDate><atom:link href="https://nrgoncalves.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>PySpark</title>
+      <link>https://nrgoncalves.github.io/tags/pyspark/</link>
+      <pubDate>Thu, 14 Jul 2022 15:09:12 +0100</pubDate>
+      
+      <guid>https://nrgoncalves.github.io/tags/pyspark/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Spark</title>
+      <link>https://nrgoncalves.github.io/tags/spark/</link>
+      <pubDate>Thu, 14 Jul 2022 15:09:12 +0100</pubDate>
+      
+      <guid>https://nrgoncalves.github.io/tags/spark/</guid>
+      <description></description>
+    </item>
+    
     <item>
       <title>Configuration management</title>
       <link>https://nrgoncalves.github.io/tags/configuration-management/</link>
