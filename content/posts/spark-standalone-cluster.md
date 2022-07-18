@@ -1,7 +1,7 @@
 ---
 title: "Spark Standalone Cluster"
 date: 2022-07-14T15:09:12+01:00
-draft: true
+draft: false
 categories: ["Infrastructure"]
 tags: ["Spark", "PySpark"]
 ---
