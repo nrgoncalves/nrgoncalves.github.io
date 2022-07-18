@@ -8,7 +8,7 @@
     <language>en-gb</language>
     <lastBuildDate>Thu, 14 Jul 2022 15:09:12 +0100</lastBuildDate><atom:link href="https://nrgoncalves.github.io/tags/spark/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>Spark Standalone Cluster</title>
+      <title>Setting up a Spark Standalone Cluster</title>
       <link>https://nrgoncalves.github.io/posts/spark-standalone-cluster/</link>
       <pubDate>Thu, 14 Jul 2022 15:09:12 +0100</pubDate>
       

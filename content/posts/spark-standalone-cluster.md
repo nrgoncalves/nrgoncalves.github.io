@@ -1,5 +1,5 @@
 ---
-title: "Spark Standalone Cluster"
+title: "Setting up a Spark Standalone Cluster"
 date: 2022-07-14T15:09:12+01:00
 draft: false
 categories: ["Infrastructure"]
